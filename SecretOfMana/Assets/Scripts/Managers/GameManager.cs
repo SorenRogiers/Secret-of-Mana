@@ -6,7 +6,7 @@ using UnityEngine;
  * ************
  * Creates all the other managers
  * Holds all the static information
- * Holds inventory
+ * Holds inventory - Handles input
  * Creates visual prefabs based on information from other managers
  */
 public class GameManager : Singleton<GameManager> {
@@ -17,5 +17,19 @@ public class GameManager : Singleton<GameManager> {
     {
         Debug.Log("Creating other managers!");
         _characterManager = new CharacterManager();
+    }
+
+    private void Update()
+    {
+        HandleInput();
+    }
+
+    private void HandleInput()
+    {
+        //Switch to different character
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _characterManager.SwitchCharacter();
+        }
     }
 }

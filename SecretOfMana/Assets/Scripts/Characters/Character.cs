@@ -19,8 +19,7 @@ public abstract class Character
 
     //MEMBERS
     //*******
-    public string Name { get; protected set; }
-
+    public string Name { get; set; }
     public int Health { get; protected set; }
     public int MaxHealth { get; protected set; }
     public int Mana { get; protected set; }
@@ -29,7 +28,7 @@ public abstract class Character
 
     public bool IsDead { get; protected set; }
 
-    public Characters CharacterType { get; protected set; }
+    public Characters CharacterType { get; set; }
 
     protected VisualCharacter _visualCharacter;
 
@@ -41,6 +40,8 @@ public abstract class Character
         Attack = 1;
         MaxHealth = 100;
         Health = MaxHealth;
+
+        _visualCharacter = new VisualCharacter();
     }
 
     protected virtual void Die()
@@ -62,6 +63,7 @@ public abstract class Character
     public VisualCharacter VisualCharacter
     {
         get { return _visualCharacter; }
+        set { _visualCharacter = value; }
     }
 
     public void Heal (int healNumber)
