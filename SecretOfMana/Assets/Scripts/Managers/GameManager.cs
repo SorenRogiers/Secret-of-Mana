@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /* GAME MANAGER
  * ************
@@ -12,11 +10,13 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager> {
 
 	public CharacterManager _characterManager { get; private set; }
+    public Inventory _inventory { get; private set; }
 
     private void Awake()
     {
         Debug.Log("Creating other managers!");
         _characterManager = new CharacterManager();
+        _inventory = new Inventory();
     }
 
     private void Update()
