@@ -25,7 +25,7 @@ public abstract class Character
     public int Mana { get; protected set; }
     public int Attack { get; protected set; }
     public int Defense { get; protected set; }
-
+    public bool IsActive { get;set; }
     public bool IsDead { get; protected set; }
 
     public Characters CharacterType { get; set; }
@@ -66,7 +66,7 @@ public abstract class Character
         set { _visualCharacter = value; }
     }
 
-    public void Heal (int healNumber)
+    public void Heal(int healNumber)
     {
         Health += healNumber;
 
