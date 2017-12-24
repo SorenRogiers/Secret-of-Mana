@@ -18,13 +18,10 @@ public class Character_EnemyBehaviour : VisualCharacter
     private LayerMask _obstaclesMask;
 
     private float _moveSpeed = 4.0f;
-    private float _rotationSpeed = 20.0f;
     private float _attackRange = 2.0f;
-    private float _attackTimer = 0.0f;
-    private const float _attackDelay = 1.0f;
+    private float _attackDelay = 1.0f;
 
     private NavMeshAgent _navMeshAgent;
-
     //METHODS
     //*******
     private void Start()
@@ -46,9 +43,12 @@ public class Character_EnemyBehaviour : VisualCharacter
 
     private void Update()
     {
-        if(IsTargetInFov)
+        _attackDelay -= Time.deltaTime;
+
+        if (IsTargetInFov)
         {
             FollowTarget();
+            Attack();
         }
     }
 
@@ -85,7 +85,6 @@ public class Character_EnemyBehaviour : VisualCharacter
                     if (!Physics.Raycast(transform.position, dirToTarget, ViewRadius, _obstaclesMask))
                     {
                         IsTargetInFov = true;
-                        
                     }
                 }
             }
@@ -105,5 +104,19 @@ public class Character_EnemyBehaviour : VisualCharacter
     {
         _navMeshAgent.isStopped = false;
         _navMeshAgent.destination = Target.position;
+    }
+
+    private void Attack()
+    {
+        if(_attackDelay <= 0)
+        {
+            Vector3 dirToTarget = (Target.transform.position - this.transform.position);
+
+            if(dirToTarget.sqrMagnitude < _attackRange * _attackRange)
+            {
+                _attackDelay = 1.0f;
+                GameManager.Instance().CharacterManager.SelectedCharacter.TakeDamage(_character.Attack);
+            }
+        }
     }
 }
