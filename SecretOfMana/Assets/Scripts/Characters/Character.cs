@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 /* CHARACTER CLASS
  * ***************
  * Contains all the information related to characters
@@ -19,18 +16,19 @@ public abstract class Character
 
     //MEMBERS
     //*******
-    public string Name { get; set; }
+    public string Name { get; protected set; }
     public int Health { get; protected set; }
     public int MaxHealth { get; protected set; }
     public int Mana { get; protected set; }
     public int Attack { get; protected set; }
     public int Defense { get; protected set; }
     public bool IsActive { get;set; }
-    public bool IsDead { get; protected set; }
 
-    public Characters CharacterType { get; set; }
+    public Characters CharacterType { get; protected set; }
 
     protected VisualCharacter _visualCharacter;
+
+    private string _prefabPath;
 
     //METHODS
     //*******
@@ -40,13 +38,10 @@ public abstract class Character
         Attack = 1;
         MaxHealth = 100;
         Health = MaxHealth;
-
-        _visualCharacter = new VisualCharacter();
     }
 
     protected virtual void Die()
     {
-        IsDead = true;
     }
 
     public void TakeDamage(int damageNumber)
@@ -72,5 +67,41 @@ public abstract class Character
 
         if (Health > MaxHealth)
             Health = MaxHealth;
+    }
+
+    protected void DetermineCharacterModel(Characters characterType)
+    {
+        //Load the correct prefab depending on the characterType
+        switch (CharacterType)
+        {
+            case Characters.HERO:
+                Name = "Hero";
+                _prefabPath = "Prefabs/Hero";
+                break;
+            case Characters.GIRL:
+                Name = "Girl";
+                _prefabPath = "Prefabs/Girl";
+                break;
+            case Characters.SPRITE:
+                Name = "Sprite";
+                _prefabPath = "Prefabs/Sprite";
+                break;
+            case Characters.ENEMY:
+                Name = "Enemy";
+                _prefabPath = "Prefabs/Enemy";
+                break;
+            default:
+                goto case Character.Characters.HERO;
+        }
+
+        InstantiateCharacter();
+    }
+
+    private void InstantiateCharacter()
+    {
+        var characterPrefab = Resources.Load<VisualCharacter>(_prefabPath);
+        VisualCharacter = Object.Instantiate(characterPrefab);
+        VisualCharacter.gameObject.name = Name;
+       
     }
 }

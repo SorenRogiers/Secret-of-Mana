@@ -18,9 +18,10 @@ public class CharacterManager
 
     private Character _selectedCharacter;
 
-    private GameObject _heroSpawnPosition;
-    private GameObject _girlSpawnPosition;
-    private GameObject _spriteSpawnPosition;
+    private Transform _heroSpawnPosition;
+    private Transform _girlSpawnPosition;
+    private Transform _spriteSpawnPosition;
+    private Transform _enemieSpawnPositions;
 
     private int _characterIndex = 0;
 
@@ -28,33 +29,9 @@ public class CharacterManager
     //*******
     public CharacterManager()
     {
-        _heroSpawnPosition = GameObject.Find("Hero_SpawnPosition");
-        _girlSpawnPosition = GameObject.Find("Girl_SpawnPosition");
-        _spriteSpawnPosition = GameObject.Find("Sprite_SpawnPosition");
+        CreatePlayers();
 
-        //Create the Hero character and add it to the characterlist
-        var heroCharacter = new Character_Player(Character.Characters.HERO);
-        heroCharacter.IsActive = true;
-        heroCharacter.VisualCharacter.transform.position = _heroSpawnPosition.transform.position;
-        _characterList.Add(heroCharacter);
-
-        //Create the Girl character and add it to the characterlist
-        var girlCharacter = new Character_Player(Character.Characters.GIRL);
-        (girlCharacter.VisualCharacter as Character_PlayerBehaviour).Target = heroCharacter.VisualCharacter.transform;
-        girlCharacter.VisualCharacter.transform.position = _girlSpawnPosition.transform.position;
-        _characterList.Add(girlCharacter);
-
-        //Create the Sprite character and add it to the characterlist
-        var spriteCharacter = new Character_Player(Character.Characters.SPRITE);
-        (spriteCharacter.VisualCharacter as Character_PlayerBehaviour).Target = heroCharacter.VisualCharacter.transform;
-        spriteCharacter.VisualCharacter.transform.position = _spriteSpawnPosition.transform.position;
-        _characterList.Add(spriteCharacter);
-
-        //Set selected character to hero
-        _selectedCharacter = heroCharacter;
-
-        //Set camera for now
-        Camera.main.GetComponent<PlayerCamera>().SetCameraTarget(_selectedCharacter.VisualCharacter.transform);
+        CreateEnemies();
     }
 
     public void SwitchCharacter()
@@ -90,5 +67,47 @@ public class CharacterManager
     public List<Character> EnemyList
     {
         get { return _enemyList; }
+    }
+
+    private void CreatePlayers()
+    {
+        _heroSpawnPosition = GameObject.Find("Hero_SpawnPosition").transform;
+        _girlSpawnPosition = GameObject.Find("Girl_SpawnPosition").transform;
+        _spriteSpawnPosition = GameObject.Find("Sprite_SpawnPosition").transform;
+
+        //Create the Hero character and add it to the characterlist
+        var heroCharacter = new Character_Player(Character.Characters.HERO);
+        heroCharacter.IsActive = true;
+        heroCharacter.VisualCharacter.transform.position = _heroSpawnPosition.position;
+        _characterList.Add(heroCharacter);
+
+        //Create the Girl character and add it to the characterlist
+        var girlCharacter = new Character_Player(Character.Characters.GIRL);
+        (girlCharacter.VisualCharacter as Character_PlayerBehaviour).Target = heroCharacter.VisualCharacter.transform;
+        girlCharacter.VisualCharacter.transform.position = _girlSpawnPosition.position;
+        _characterList.Add(girlCharacter);
+
+        //Create the Sprite character and add it to the characterlist
+        var spriteCharacter = new Character_Player(Character.Characters.SPRITE);
+        (spriteCharacter.VisualCharacter as Character_PlayerBehaviour).Target = heroCharacter.VisualCharacter.transform;
+        spriteCharacter.VisualCharacter.transform.position = _spriteSpawnPosition.position;
+        _characterList.Add(spriteCharacter);
+
+        //Set selected character to hero
+        _selectedCharacter = heroCharacter;
+
+        //Set the camera to the selected character.
+        Camera.main.GetComponent<PlayerCamera>().SetCameraTarget(_selectedCharacter.VisualCharacter.transform);
+    }
+
+    private void CreateEnemies()
+    {
+        _enemieSpawnPositions = GameObject.Find("Enemy_SpawnPositions").transform;
+        foreach(Transform spawn in _enemieSpawnPositions)
+        {
+            var enemy = new Character_Enemy(Character.Characters.ENEMY);
+            enemy.VisualCharacter.transform.position = spawn.position;
+            _enemyList.Add(enemy);
+        }
     }
 }
