@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 33906000568419060}
   - component: {fileID: 136740228118619360}
   - component: {fileID: 23180676139941160}
-  - component: {fileID: 114149564977679150}
   - component: {fileID: 143073091880060716}
   - component: {fileID: 195696112492516862}
+  - component: {fileID: 114250667433546340}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -125,7 +125,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ed95372c85a351f48bb63743ed533413, type: 2}
+  - {fileID: 2100000, guid: 2ee63f3dc8cbb5d4fb1694632357e94b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,7 +159,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1388594438037756}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114149564977679150
+--- !u!114 &114250667433546340
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1388594438037756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e95b69ea2bc37428568c6f1ee4dc9b, type: 3}
+  m_Script: {fileID: 11500000, guid: 57c1fbab296208640bba55d0075e223e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!135 &135068737175896602
@@ -225,7 +225,7 @@ NavMeshAgent:
   m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3.5
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

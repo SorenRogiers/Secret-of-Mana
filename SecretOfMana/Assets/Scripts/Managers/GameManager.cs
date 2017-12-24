@@ -9,14 +9,14 @@
  */
 public class GameManager : Singleton<GameManager> {
 
-	public CharacterManager _characterManager { get; private set; }
-    public Inventory _inventory { get; private set; }
+	public CharacterManager CharacterManager { get; private set; }
+    public Inventory Inventory { get; private set; }
 
     private void Awake()
     {
         Debug.Log("Creating other managers!");
-        _characterManager = new CharacterManager();
-        _inventory = new Inventory();
+        CharacterManager = new CharacterManager();
+        Inventory = new Inventory();
     }
 
     private void Update()
@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager> {
         //Switch to different character
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _characterManager.SwitchCharacter();
+            CharacterManager.SwitchCharacter();
         }
     }
 }

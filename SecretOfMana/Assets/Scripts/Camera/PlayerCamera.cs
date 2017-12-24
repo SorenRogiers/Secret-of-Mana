@@ -6,7 +6,7 @@ public class PlayerCamera : MonoBehaviour {
 
     private Transform _cameraTarget;
 
-    private Vector3 _cameraOffset = new Vector3(0, 10, -5);
+    private Vector3 _cameraOffset = new Vector3(0, 15, -5);
     private float _speed = 5.0f;
 
     public void SetCameraTarget(Transform target)

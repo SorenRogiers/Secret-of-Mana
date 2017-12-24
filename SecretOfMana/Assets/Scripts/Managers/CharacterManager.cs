@@ -16,7 +16,7 @@ public class CharacterManager
     private List<Character> _characterList = new List<Character>();
     private List<Character> _enemyList = new List<Character>();
 
-    private Character _selectedCharacter;
+    public Character SelectedCharacter { get; private set; }
 
     private Transform _heroSpawnPosition;
     private Transform _girlSpawnPosition;
@@ -37,7 +37,7 @@ public class CharacterManager
     public void SwitchCharacter()
     {
         //Set the current character to false
-        _selectedCharacter.IsActive = false;
+        SelectedCharacter.IsActive = false;
 
         if (_characterIndex >= _characterList.Count - 1)
             _characterIndex = 0;
@@ -45,17 +45,17 @@ public class CharacterManager
             _characterIndex++;
 
         //Get the next character in the list and set it as selected character
-        _selectedCharacter = _characterList[_characterIndex];
+        SelectedCharacter = _characterList[_characterIndex];
 
         //Set it to active again and give the camera a new target
-        _selectedCharacter.IsActive = true;
-        Camera.main.GetComponent<PlayerCamera>().SetCameraTarget(_selectedCharacter.VisualCharacter.transform);
+        SelectedCharacter.IsActive = true;
+        Camera.main.GetComponent<PlayerCamera>().SetCameraTarget(SelectedCharacter.VisualCharacter.transform);
 
         //Update the new Target the inactive characters have to follow
         foreach(Character c in _characterList)
         {
             if (c.IsActive == false)
-                (c.VisualCharacter as Character_PlayerBehaviour).Target = _selectedCharacter.VisualCharacter.transform;
+                (c.VisualCharacter as Character_PlayerBehaviour).Target = SelectedCharacter.VisualCharacter.transform;
         }
     }
 
@@ -94,10 +94,10 @@ public class CharacterManager
         _characterList.Add(spriteCharacter);
 
         //Set selected character to hero
-        _selectedCharacter = heroCharacter;
+        SelectedCharacter = heroCharacter;
 
         //Set the camera to the selected character.
-        Camera.main.GetComponent<PlayerCamera>().SetCameraTarget(_selectedCharacter.VisualCharacter.transform);
+        Camera.main.GetComponent<PlayerCamera>().SetCameraTarget(SelectedCharacter.VisualCharacter.transform);
     }
 
     private void CreateEnemies()
@@ -107,6 +107,7 @@ public class CharacterManager
         {
             var enemy = new Character_Enemy(Character.Characters.ENEMY);
             enemy.VisualCharacter.transform.position = spawn.position;
+            enemy.VisualCharacter.transform.rotation = spawn.rotation;
             _enemyList.Add(enemy);
         }
     }
