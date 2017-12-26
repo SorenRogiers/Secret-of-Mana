@@ -13,7 +13,7 @@ public class VisualCharacter : MonoBehaviour
 
     //METHODS
     //*******
-    public Character GetCharacter(Character.Characters characterType)
+    public Character GetCharacter()
     {
         return _character;
     }

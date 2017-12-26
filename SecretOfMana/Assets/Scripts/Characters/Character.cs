@@ -23,7 +23,7 @@ public abstract class Character
     public int Attack { get; protected set; }
     public int Defense { get; protected set; }
     public bool IsActive { get;set; }
-
+    public Weapon Weapon { get; protected set; }
     public Characters CharacterType { get; protected set; }
 
     protected VisualCharacter _visualCharacter;
@@ -102,6 +102,33 @@ public abstract class Character
         var characterPrefab = Resources.Load<VisualCharacter>(_prefabPath);
         VisualCharacter = Object.Instantiate(characterPrefab);
         VisualCharacter.gameObject.name = Name;
-       
+    }
+
+    public void EquipItem(Item item)
+    {
+        UnEquipItem(Weapon);
+
+        Weapon = (item as Weapon_Sword);
+        Weapon.Equipped = true;
+    }
+
+    public void UnEquipItem(Item item)
+    {
+        if (item == null)
+            return;
+
+        if(item.Equipped)
+        {
+            item.Equipped = false;
+            Weapon = null;
+        }
+    }
+
+    public int GetTotatAttackDamage()
+    {
+        if (Weapon != null)
+            return Attack + Weapon.Attack;
+
+        return Attack;
     }
 }

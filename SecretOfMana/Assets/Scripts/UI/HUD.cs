@@ -11,20 +11,20 @@ public class HUD : MonoBehaviour
      */ 
     struct CharacterUI
     {
-        public GameObject _root;
-        public Text _text;
-        public Image _healthbar;
-        public Character _character;
+        public GameObject Root;
+        public Text HealthText;
+        public Image Healthbar;
+        public Character CharacterData;
 
         public void Refresh()
         {
             //Update the ui elements with the current character data
-            _text.text = _character.Health + " / " + _character.MaxHealth;
+            HealthText.text = CharacterData.Health + " / " + CharacterData.MaxHealth;
 
-            float health = _character.Health;
-            float maxHealth = _character.MaxHealth;
+            float health = CharacterData.Health;
+            float maxHealth = CharacterData.MaxHealth;
 
-            _healthbar.fillAmount = health / maxHealth;
+            Healthbar.fillAmount = health / maxHealth;
         }
     }
 
@@ -37,23 +37,23 @@ public class HUD : MonoBehaviour
         //Creating a character UI object for every character.
 
         _heroPanel = new CharacterUI { };
-        _heroPanel._root = GameObject.Find("HeroPanel");
-        _heroPanel._text = _heroPanel._root.transform.Find("HealthText").GetComponent<Text>();
-        _heroPanel._healthbar = _heroPanel._root.transform.Find("Healthbar").GetComponent<Image>();
-        _heroPanel._character = GameManager.Instance().CharacterManager.CharacterList.Where(x => x.CharacterType == Character.Characters.HERO).SingleOrDefault();
+        _heroPanel.Root = GameObject.Find("HeroPanel");
+        _heroPanel.HealthText = _heroPanel.Root.transform.Find("HealthText").GetComponent<Text>();
+        _heroPanel.Healthbar = _heroPanel.Root.transform.Find("Healthbar").GetComponent<Image>();
+        _heroPanel.CharacterData = GameManager.Instance().CharacterManager.CharacterList.FirstOrDefault(x => x.CharacterType == Character.Characters.HERO);
         
 
         _girlPanel = new CharacterUI { };
-        _girlPanel._root = GameObject.Find("GirlPanel");
-        _girlPanel._text = _girlPanel._root.transform.Find("HealthText").GetComponent<Text>();
-        _girlPanel._healthbar = _girlPanel._root.transform.Find("Healthbar").GetComponent<Image>();
-        _girlPanel._character = GameManager.Instance().CharacterManager.CharacterList.Where(x => x.CharacterType == Character.Characters.GIRL).SingleOrDefault();
+        _girlPanel.Root = GameObject.Find("GirlPanel");
+        _girlPanel.HealthText = _girlPanel.Root.transform.Find("HealthText").GetComponent<Text>();
+        _girlPanel.Healthbar = _girlPanel.Root.transform.Find("Healthbar").GetComponent<Image>();
+        _girlPanel.CharacterData = GameManager.Instance().CharacterManager.CharacterList.FirstOrDefault(x => x.CharacterType == Character.Characters.GIRL);
 
         _spritePanel = new CharacterUI { };
-        _spritePanel._root = GameObject.Find("SpritePanel");
-        _spritePanel._text = _spritePanel._root.transform.Find("HealthText").GetComponent<Text>();
-        _spritePanel._healthbar = _spritePanel._root.transform.Find("Healthbar").GetComponent<Image>();
-        _spritePanel._character = GameManager.Instance().CharacterManager.CharacterList.Where(x => x.CharacterType == Character.Characters.SPRITE).SingleOrDefault();
+        _spritePanel.Root = GameObject.Find("SpritePanel");
+        _spritePanel.HealthText = _spritePanel.Root.transform.Find("HealthText").GetComponent<Text>();
+        _spritePanel.Healthbar = _spritePanel.Root.transform.Find("Healthbar").GetComponent<Image>();
+        _spritePanel.CharacterData = GameManager.Instance().CharacterManager.CharacterList.FirstOrDefault(x => x.CharacterType == Character.Characters.SPRITE);
     }
 
     private void Update()

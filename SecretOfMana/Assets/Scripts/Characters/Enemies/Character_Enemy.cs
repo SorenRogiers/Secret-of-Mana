@@ -8,7 +8,7 @@ public class Character_Enemy : Character
 {
     public Character_Enemy(Characters characterType)
     {
-        Attack = 2;
+        Attack = 5;
         Defense = 2;
 
         MaxHealth = 20;

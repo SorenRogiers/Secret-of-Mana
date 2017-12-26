@@ -34,9 +34,14 @@ public class Character_PlayerBehaviour : VisualCharacter
     private void Update()
     {
         if (_character.IsActive)
+        {
             Move();
+            Attack();
+        }
         else
+        {
             FollowTarget();
+        }
     }
 
     private void Move()
@@ -70,5 +75,26 @@ public class Character_PlayerBehaviour : VisualCharacter
     {
         _navMeshAgent.isStopped = false;
         _navMeshAgent.destination = Target.position;
+    }
+
+    private void Attack()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            //If we have a weapon equipped use it
+            if(_character.Weapon != null)
+            {
+                //Use weapon is a raycast that returns the enemy gameobject we hit if we didnt hit an enemy it returns null
+                var enemyHit = _character.Weapon.UseWeapon(this);
+
+                if (enemyHit != null)
+                {
+                    //Apply the damage to our enemy which is base atk + weapon atk minus the defense of the enemy.
+                    int totalDamage = _character.GetTotatAttackDamage() - enemyHit.GetComponent<Character_EnemyBehaviour>().GetCharacter().Defense;
+
+                    enemyHit.GetComponent<Character_EnemyBehaviour>().GetCharacter().TakeDamage(totalDamage);
+                }
+            }
+        }
     }
 }

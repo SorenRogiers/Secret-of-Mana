@@ -21,6 +21,11 @@ public class GameManager : Singleton<GameManager> {
         UIManager = new UIManager();
     }
 
+    private void Start()
+    {
+        AddStarterItems();
+    }
+
     private void Update()
     {
         HandleInput();
@@ -43,5 +48,18 @@ public class GameManager : Singleton<GameManager> {
         {
             UIManager.inventoryPanel.Toggle();
         }
+    }
+
+    private void AddStarterItems()
+    {
+        var rustySword = new Weapon_Sword("Rusty Sword", 3);
+        var broadSword = new Weapon_Sword("Broad Sword", 8);
+        var heraldSword = new Weapon_Sword("Herald Sword", 14);
+
+        Inventory.AddItem(rustySword);
+        Inventory.AddItem(broadSword);
+        Inventory.AddItem(heraldSword);
+
+        CharacterManager.SelectedCharacter.EquipItem(rustySword);
     }
 }

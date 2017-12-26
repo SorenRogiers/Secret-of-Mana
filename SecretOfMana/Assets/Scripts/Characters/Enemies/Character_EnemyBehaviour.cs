@@ -19,7 +19,7 @@ public class Character_EnemyBehaviour : VisualCharacter
 
     private float _moveSpeed = 4.0f;
     private float _attackRange = 2.0f;
-    private float _attackDelay = 1.0f;
+    private float _attackDelay = 2.0f;
 
     private NavMeshAgent _navMeshAgent;
     //METHODS
@@ -115,7 +115,12 @@ public class Character_EnemyBehaviour : VisualCharacter
             if(dirToTarget.sqrMagnitude < _attackRange * _attackRange)
             {
                 _attackDelay = 1.0f;
-                GameManager.Instance().CharacterManager.SelectedCharacter.TakeDamage(_character.Attack);
+
+                //Get the total damage by the enemy's attack - defense of the selected character
+                int totalDamage = _character.Attack - GameManager.Instance().CharacterManager.SelectedCharacter.Defense;
+
+                //Apply the damage
+                GameManager.Instance().CharacterManager.SelectedCharacter.TakeDamage(totalDamage);
             }
         }
     }

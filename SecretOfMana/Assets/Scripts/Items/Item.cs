@@ -5,7 +5,7 @@
  */
 public abstract class Item
 {
-	public enum ItemType
+	public enum ItemTypes
     {
         Weapon,
         Armor
@@ -15,18 +15,8 @@ public abstract class Item
     //*******
     public int Amount { get; set; }
     public string Name { get; protected set; }
-
-    private ItemType _itemType;
-
-    //METHODS
-    //*******
-    public ItemType GetItemType()
-    {
-        return _itemType;
-    }
-
-    protected void SetItemType(ItemType type)
-    {
-        _itemType = type;
-    }
+    public ItemTypes ItemType { get; protected set; }
+    public int Attack { get; protected set; }
+    public int Defense { get; protected set; }
+    public bool Equipped { get; set; }
 }

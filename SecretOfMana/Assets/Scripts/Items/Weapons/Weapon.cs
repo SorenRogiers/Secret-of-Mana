@@ -1,16 +1,21 @@
-﻿public abstract class Weapon : Item
+﻿using UnityEngine;
+
+public abstract class Weapon : Item
 {
-    public enum WeaponType
+    public enum WeaponTypes
     {
         Sword,
         Bow,
         Staff
     }
-	
-    public WeaponType CurrentWeaponType { get; protected set; }
+
+    public WeaponTypes WeaponType { get; protected set; }
+    public float AttackRange {get; protected set;}
 
     public Weapon()
     {
-        SetItemType(ItemType.Weapon);
+        ItemType = ItemTypes.Weapon;
     }
+
+    public abstract GameObject UseWeapon(VisualCharacter owner);
 }
