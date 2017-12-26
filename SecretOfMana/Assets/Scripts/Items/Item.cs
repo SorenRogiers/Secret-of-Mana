@@ -15,6 +15,7 @@ public abstract class Item
     {
         Attack = 0;
         Defense = 0;
+        Amount = 1;
     }
 
     //MEMBERS

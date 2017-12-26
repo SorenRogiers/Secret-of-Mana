@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class ManaPanel : MonoBehaviour
 {
@@ -17,7 +15,6 @@ public abstract class ManaPanel : MonoBehaviour
     public void Toggle()
     {
         //Refresh to get the newest character stats and toggle the panel on or off.
-
         Refresh();
 
         _isPanelActive = !_isPanelActive;

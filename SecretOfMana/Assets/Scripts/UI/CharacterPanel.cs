@@ -18,6 +18,7 @@ public class CharacterPanel : ManaPanel
     {
         _selectedCharacter = GameManager.Instance().CharacterManager.SelectedCharacter;
 
+        //Change the color depending on the active character (Brown = hero - Yellow = girl - Blue = sprite)
         switch (_selectedCharacter.CharacterType)
         {
             case Character.Characters.HERO:

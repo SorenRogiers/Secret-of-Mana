@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Linq;
-using UnityEngine.SceneManagement;
 
 /* GAME MANAGER
  * ************
@@ -24,7 +23,6 @@ public class GameManager : Singleton<GameManager> {
         CharacterManager = new CharacterManager();
         Inventory = new Inventory();
         UIManager = new UIManager();
-
     }
 
     private void Start()
@@ -39,10 +37,12 @@ public class GameManager : Singleton<GameManager> {
         if (IsGameCompleted)
         {
             Time.timeScale = 0.0f;
+            //Show the end game panel paramater true means the game is completed
             UIManager.EndGamePanel.Show(true);
         }
         else if(IsGameOver)
         {
+            //Show the end game panel paramater false means the game is over since you died
             UIManager.EndGamePanel.Show(false);
             Time.timeScale = 0.0f;
         }
@@ -57,21 +57,25 @@ public class GameManager : Singleton<GameManager> {
             CharacterManager.SwitchCharacter();
         }
 
+        //Show the CharacterPanel
         if (Input.GetKeyDown(KeyCode.C))
         {
             UIManager.CharacterPanel.Toggle();
         }
 
+        //Show the InventoryPanel
         if (Input.GetKeyDown(KeyCode.I))
         {
             UIManager.InventoryPanel.Toggle();
         }
 
+        //Deal 50 damage to every character
         if(Input.GetKeyDown(KeyCode.Q))
         {
             CharactersHalfHP();
         }
 
+        //Heal every character to full hp
         if(Input.GetKeyDown(KeyCode.E))
         {
             HealAllCharacters();
@@ -81,7 +85,7 @@ public class GameManager : Singleton<GameManager> {
 
     private void AddStarterItems()
     {
-        var rustySword = new Weapon_Sword("Rusty Sword", 3);
+        var rustySword = new Weapon_Sword("Rusty Sword", 7);
         var shortBow = new Weapon_Bow("Short Bow", 4);
         var LightsWrath = new Weapon_Staff("Light's Wrath");
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /* INVENTORYPANEL
  * **************
  * Shows the current items in the inventory
- * Shows the current items by the current active character
+ * Shows the items equipped by the current active character
  */
 public class InventoryPanel : ManaPanel
 {

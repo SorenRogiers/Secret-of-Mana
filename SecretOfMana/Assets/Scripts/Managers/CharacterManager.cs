@@ -30,7 +30,6 @@ public class CharacterManager
     public CharacterManager()
     {
         CreatePlayers();
-
         CreateEnemies();
     }
 
@@ -103,6 +102,8 @@ public class CharacterManager
     private void CreateEnemies()
     {
         _enemieSpawnPositions = GameObject.Find("Enemy_SpawnPositions").transform;
+
+        //Create a new enemy for every transform found in _enemiesSpawnPosition
         foreach(Transform spawn in _enemieSpawnPositions)
         {
             var enemy = new Character_Enemy(Character.Characters.ENEMY);

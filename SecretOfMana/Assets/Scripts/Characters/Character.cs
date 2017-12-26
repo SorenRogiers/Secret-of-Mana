@@ -2,7 +2,8 @@
 /* CHARACTER CLASS
  * ***************
  * Contains all the information related to characters
- * Name, HP , MP, Weapon, Stats, Level, Att, Def , type
+ * Name, HP , MP, Weapon, Stats, Level, Att, Def , type, Armor
+ * Contains methods like TakeDamage,Die and Heal
  */
 public abstract class Character
 {
@@ -110,6 +111,7 @@ public abstract class Character
 
     public void EquipItem(Item item)
     {
+        //Place item in the weapon slot
         if(item.ItemType == Item.ItemTypes.Weapon)
         {
             UnEquipItem(Weapon);
@@ -118,6 +120,7 @@ public abstract class Character
             Weapon.Equipped = true;
             Weapon.EquippedBy = CharacterType;
         }
+        //Place the item in one of the armor slots
         else if(item.ItemType == Item.ItemTypes.Armor)
         {
             switch((item as Armor).ArmorType)
