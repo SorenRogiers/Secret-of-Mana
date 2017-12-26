@@ -117,7 +117,8 @@ public class Character_EnemyBehaviour : VisualCharacter
                 _attackDelay = 1.0f;
 
                 //Get the total damage by the enemy's attack - defense of the selected character
-                int totalDamage = _character.Attack - GameManager.Instance().CharacterManager.SelectedCharacter.Defense;
+                int totalDamage = _character.Attack - GameManager.Instance().CharacterManager.SelectedCharacter.GetTotalDefense();
+                totalDamage = totalDamage >= 0 ? totalDamage : 0;
 
                 //Apply the damage
                 GameManager.Instance().CharacterManager.SelectedCharacter.TakeDamage(totalDamage);

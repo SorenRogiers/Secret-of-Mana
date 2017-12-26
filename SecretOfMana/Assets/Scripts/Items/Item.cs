@@ -11,6 +11,12 @@ public abstract class Item
         Armor
     }
 
+    public Item()
+    {
+        Attack = 0;
+        Defense = 0;
+    }
+
     //MEMBERS
     //*******
     public int Amount { get; set; }
@@ -19,4 +25,5 @@ public abstract class Item
     public int Attack { get; protected set; }
     public int Defense { get; protected set; }
     public bool Equipped { get; set; }
+    public Character.Characters EquippedBy { get; set; }
 }

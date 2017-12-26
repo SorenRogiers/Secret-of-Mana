@@ -7,7 +7,7 @@ public abstract class ManaPanel : MonoBehaviour
     public abstract void Initialise();
     public abstract void Refresh();
 
-    private bool _isPanelActive = false;
+    protected bool _isPanelActive = false;
 
     private void Start()
     {

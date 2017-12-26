@@ -11,7 +11,8 @@ using UnityEngine;
 public class UIManager
 {
     public CharacterPanel CharacterPanel { get; private set; }
-    public InventoryPanel inventoryPanel { get; private set; }
+    public InventoryPanel InventoryPanel { get; private set; }
+    public EndGamePanel EndGamePanel { get; private set; }
 
     private Canvas _canvas;
 
@@ -21,6 +22,7 @@ public class UIManager
 
         CreateCharacterPanel();
         CreateInventoryPanel();
+        CreateGameWonPanel();
     }
     
     private void CreateCharacterPanel()
@@ -37,9 +39,18 @@ public class UIManager
     {
         //Locate the prefab and instantiate it - Set the canvas as parent
         var InventoryPanelPrefab = Resources.Load<InventoryPanel>("Prefabs/UI/InventoryPanel");
-        inventoryPanel = GameObject.Instantiate(InventoryPanelPrefab);
-        inventoryPanel.transform.SetParent(_canvas.transform);
-        inventoryPanel.transform.localPosition = Vector3.zero;
-        inventoryPanel.Initialise();
+        InventoryPanel = GameObject.Instantiate(InventoryPanelPrefab);
+        InventoryPanel.transform.SetParent(_canvas.transform);
+        InventoryPanel.transform.localPosition = Vector3.zero;
+        InventoryPanel.Initialise();
+    }
+
+    private void CreateGameWonPanel()
+    {
+        var gameWonPanelPrefab = Resources.Load<EndGamePanel>("Prefabs/UI/EndGamePanel");
+        EndGamePanel = GameObject.Instantiate(gameWonPanelPrefab);
+        EndGamePanel.transform.SetParent(_canvas.transform);
+        EndGamePanel.transform.localPosition = Vector3.zero;
+        EndGamePanel.Initialise();
     }
 }

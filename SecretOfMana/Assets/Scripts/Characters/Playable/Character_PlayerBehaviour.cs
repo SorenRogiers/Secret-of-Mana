@@ -36,7 +36,11 @@ public class Character_PlayerBehaviour : VisualCharacter
         if (_character.IsActive)
         {
             Move();
-            Attack();
+
+            if (_character.Weapon.WeaponType == Weapon.WeaponTypes.Staff)
+                Heal();
+            else
+                Attack();
         }
         else
         {
@@ -90,9 +94,28 @@ public class Character_PlayerBehaviour : VisualCharacter
                 if (enemyHit != null)
                 {
                     //Apply the damage to our enemy which is base atk + weapon atk minus the defense of the enemy.
-                    int totalDamage = _character.GetTotatAttackDamage() - enemyHit.GetComponent<Character_EnemyBehaviour>().GetCharacter().Defense;
+                    int totalDamage = _character.GetTotatAttackDamage() - enemyHit.GetComponent<Character_EnemyBehaviour>().GetCharacter().GetTotalDefense();
+                    totalDamage = totalDamage >= 0 ? totalDamage : 0;
 
                     enemyHit.GetComponent<Character_EnemyBehaviour>().GetCharacter().TakeDamage(totalDamage);
+                }
+            }
+        }
+    }
+
+    private void Heal()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            //If we have a weapon equipped use it
+            if (_character.Weapon != null)
+            {
+                //Use weapon is a raycast that returns the enemy gameobject we hit if we didnt hit an enemy it returns null
+                var playerHit = _character.Weapon.UseWeapon(this);
+
+                if (playerHit != null)
+                {
+                    playerHit.GetComponent<Character_PlayerBehaviour>().GetCharacter().Heal(10);
                 }
             }
         }

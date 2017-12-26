@@ -11,7 +11,8 @@ public abstract class Character
         HERO = 0,
         GIRL,
         SPRITE,
-        ENEMY
+        ENEMY,
+        NONE
     }
 
     //MEMBERS
@@ -24,6 +25,9 @@ public abstract class Character
     public int Defense { get; protected set; }
     public bool IsActive { get;set; }
     public Weapon Weapon { get; protected set; }
+    public Armor_Helm Helm { get; protected set; }
+    public Armor_Chest Chest { get; protected set; }
+    public Armor_Bracers Bracers { get; protected set; }
     public Characters CharacterType { get; protected set; }
 
     protected VisualCharacter _visualCharacter;
@@ -106,10 +110,44 @@ public abstract class Character
 
     public void EquipItem(Item item)
     {
-        UnEquipItem(Weapon);
+        if(item.ItemType == Item.ItemTypes.Weapon)
+        {
+            UnEquipItem(Weapon);
 
-        Weapon = (item as Weapon_Sword);
-        Weapon.Equipped = true;
+            Weapon = (item as Weapon);
+            Weapon.Equipped = true;
+            Weapon.EquippedBy = CharacterType;
+        }
+        else if(item.ItemType == Item.ItemTypes.Armor)
+        {
+            switch((item as Armor).ArmorType)
+            {
+                case Armor.ArmorTypes.Helm:
+                    {
+                        UnEquipItem(Helm);
+                        Helm = (item as Armor_Helm);
+                        Helm.Equipped = true;
+                        Helm.EquippedBy = CharacterType;
+                        break;
+                    }
+                case Armor.ArmorTypes.Chest:
+                    {
+                        UnEquipItem(Chest);
+                        Chest = (item as Armor_Chest);
+                        Chest.Equipped = true;
+                        Chest.EquippedBy = CharacterType;
+                        break;
+                    }
+                case Armor.ArmorTypes.Bracers:
+                    {
+                        UnEquipItem(Bracers);
+                        Bracers = (item as Armor_Bracers);
+                        Bracers.Equipped = true;
+                        Bracers.EquippedBy = CharacterType;
+                        break;
+                    }
+            }
+        }
     }
 
     public void UnEquipItem(Item item)
@@ -120,7 +158,12 @@ public abstract class Character
         if(item.Equipped)
         {
             item.Equipped = false;
-            Weapon = null;
+            item.EquippedBy = Characters.NONE;
+
+            if (item == Weapon) Weapon = null;
+            else if (item == Helm) Helm = null;
+            else if (item == Chest) Chest = null;
+            else if (item == Bracers) Bracers = null;
         }
     }
 
@@ -130,5 +173,23 @@ public abstract class Character
             return Attack + Weapon.Attack;
 
         return Attack;
+    }
+
+    public int GetTotalDefense()
+    {
+        int helmDefense = 0;
+        int chestDefense = 0;
+        int bracerDefense = 0;
+
+        if (Helm != null)
+            helmDefense = Helm.Defense;
+
+        if (Chest != null)
+            chestDefense = Chest.Defense;
+
+        if (Bracers != null)
+            bracerDefense = Bracers.Defense;
+
+        return Defense + helmDefense + chestDefense + bracerDefense;
     }
 }

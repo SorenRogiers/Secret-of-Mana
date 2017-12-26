@@ -19,6 +19,9 @@ public class HUD : MonoBehaviour
         public void Refresh()
         {
             //Update the ui elements with the current character data
+            if (CharacterData == null)
+                return;
+
             HealthText.text = CharacterData.Health + " / " + CharacterData.MaxHealth;
 
             float health = CharacterData.Health;
